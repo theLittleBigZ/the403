@@ -6,12 +6,7 @@ Zeeshan Badr
 
 //config for connection + initaliztion of FireBase  
 var config = {
-    apiKey: "AIzaSyCpeW7zSFbo1UmM0d0iARIC4jY9Jp5w-j8",
-    authDomain: "the403-e7189.firebaseapp.com",
-    databaseURL: "https://the403-e7189.firebaseio.com",
-    projectId: "the403-e7189",
-    storageBucket: "the403-e7189.appspot.com",
-    messagingSenderId: "975648852002"
+/*your info here*/
 };
 firebase.initializeApp(config);
 var db = firebase.database();
