@@ -47,26 +47,41 @@ function CheckUser(){
 	});
 }
 
+function preReg(){
+	var email = $('#email_input').val();
+	var passwd = $('#password_input').val();
+	var Fname = $('#firstName_input').val();
+	var Lname = $('#lastName_input').val();
+
+	Resgiser(email, passwd, Fname, Lname);
+}
+
 function preAuth(email, pass, doc){
-	console.log(doc, email, pass);
 	if(!doc){
-		console.log('hello');
+		RegForm();
+		$('#login').modal();
 	}
 	else{
-		signIn(email, pass, doc, 0);
+		SignIn(email, pass, doc, 0);
 	}
 }
 
 //uses data given to build page spesific to the user [note]: type is to indcate 
 //if sign-in is from login (0) or register (1)  
-function signIn(email, pass, doc, loc){
+function SignIn(email, pass, doc, loc){
 	console.log(email, pass, doc, loc);
 }
 
 //uses data to create a user in the FireBase DataBase them sign user in 
 function Resgiser(email, pass, first, last){
-	firebase.ref('user/' + user).set({
-		email: email,
+	db.collection("users").doc(email).set({
+		
+	}).then(function(){
+		
+	}).catch(function(){
+
+	});
+	firebase.ref('user/' + email).set({
 		password: pass,
 		first_name: first,
 		last_name: last
@@ -78,8 +93,6 @@ function Resgiser(email, pass, first, last){
 function RegForm(){	
 	$('#resgiser_form').show();
 	$('#login_form').hide();
-	$('#btn_log').show();
-	$('#btn_reg').hide();
 	$('#log_title').text('Resgister');
 }
 
@@ -98,7 +111,9 @@ $(document).ready(function(){
 		$("body").css("background-color","black");
 		$("html").css("background-color","black");
 	}
-	//the above changes the site to a dark theme at night; 
+	//the above changes the site to a dark theme at night;
+	$('#resgiser_form').hide();
+	$('#reg_btn').hide();
 });
 
 //displays the login dropdown when button is clicked 

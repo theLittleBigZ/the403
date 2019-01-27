@@ -60,12 +60,23 @@
 	    					<input id="password_input" type="password">
 	    				</form>
 	    				<form id="resgiser_form">
-	    					
+	    					<label>First Name:</label>
+	    					<input id="firstName_input" type="text">
+	    					<br>
+	    					<label>Last Name:</label>
+	    					<input id="lastName_input" type="text">
+	    					<br>
+	    					<label>Email:</label>
+	    					<input id="email_input" type="email">
+	    					<br>
+	    					<label>Password:</label>
+	    					<input id="password_input" type="password">
 	    				</form>
 	    			</div>
 	    			<div class="modal-footer">
 	    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	    				<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="CheckUser();">Login</button>
+	    				<button id="reg_btn" type="button" class="btn btn-primary" data-dismiss="modal" onclick="preReg();">Register</button>
+	    				<button id="log_btn" type="button" class="btn btn-primary" data-dismiss="modal" onclick="CheckUser();">Login</button>
 	    			</div>
 	    		</div>
 	    	</div>
