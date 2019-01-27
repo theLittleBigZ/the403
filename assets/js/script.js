@@ -6,28 +6,61 @@ Zeeshan Badr
 
 //config for connection + initaliztion of FireBase  
 var config = {
-/*your info here*/
+	apiKey: "AIzaSyCpeW7zSFbo1UmM0d0iARIC4jY9Jp5w-j8",
+    authDomain: "the403-e7189.firebaseapp.com",
+    databaseURL: "https://the403-e7189.firebaseio.com",
+    projectId: "the403-e7189",
+    storageBucket: "the403-e7189.appspot.com",
+	messagingSenderId: "975648852002"
 };
 firebase.initializeApp(config);
-var db = firebase.database();
+let firestore = firebase.firestore();
+console.log("Cloud Firestores Loaded");
+
+var db = firebase.firestore();
+
+const timestamps = firebase.firestore();
+const settings = {
+    timestampsInSnapshots: true
+};
+firestore.settings(settings);
+
+
 
 //checks if data given exists in the FireBase Database
-function CheckUser(email, pass){
+function CheckUser(){
 	//get user data from FireBase if data DNE then create the user with resgister
-	/*
-	*
-	*
-	*/
-	var email = $('[name="email_input"]').val();
-	var passwd = $('[name="password_input"]').val();
+	var email = $('#email_input').val();
+	var passwd = $('#password_input').val();
+	var ref = db.collection('users').doc(email);
 
-	console.log(user + '\n' + email + '\n' + pass);
+	ref.get().then(function(doc){
+		if (doc.data()) {
+			//console.log(doc.data());
+			preAuth(doc.id, passwd, doc.data());
+		}else{
+			//console.log("No such document!");
+			preAuth(email, passwd, false);
+		}
+	}).catch(function(err){
+		console.log("error", err); 
+	});
+}
+
+function preAuth(email, pass, doc){
+	console.log(doc, email, pass);
+	if(!doc){
+		console.log('hello');
+	}
+	else{
+		signIn(email, pass, doc, 0);
+	}
 }
 
 //uses data given to build page spesific to the user [note]: type is to indcate 
 //if sign-in is from login (0) or register (1)  
-function SignIn(email, pass, loc){
-
+function signIn(email, pass, doc, loc){
+	console.log(email, pass, doc, loc);
 }
 
 //uses data to create a user in the FireBase DataBase them sign user in 
@@ -50,15 +83,6 @@ function RegForm(){
 	$('#log_title').text('Resgister');
 }
 
-//displays the login form to the user and hides the register form
-function LogForm(){	
-	$('#resgiser_form').hide();
-	$('#login_form').show();
-	$('#btn_log').hide();
-	$('#btn_reg').show();
-	$('#log_title').text('Login');
-}
-
 function CheckDom(){
 	
 }
@@ -75,9 +99,6 @@ $(document).ready(function(){
 		$("html").css("background-color","black");
 	}
 	//the above changes the site to a dark theme at night; 
-	$('#resgiser_form').hide();
-	$('#btn_log').hide();
-	//the above prettifies the login/resgister dropdown
 });
 
 //displays the login dropdown when button is clicked 
