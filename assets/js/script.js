@@ -1,4 +1,4 @@
-/*
+/* 
 Main Script File
 this file contians all required JS functions for the 403.tk to function
 Zeeshan Badr
@@ -30,6 +30,7 @@ firestore.settings(settings);
 //checks if data given exists in the FireBase Database
 function CheckUser(){
 	//get user data from FireBase if data DNE then create the user with resgister
+	//console.log('CheckUser');
 	var email = $('#email_input').val();
 	var passwd = $('#password_input').val();
 	var ref = db.collection('users').doc(email);
@@ -48,56 +49,79 @@ function CheckUser(){
 }
 
 function preReg(){
+	//console.log('preReg');
 	var email = $('#email_input').val();
 	var passwd = $('#password_input').val();
 	var Fname = $('#firstName_input').val();
 	var Lname = $('#lastName_input').val();
 
-	Resgiser(email, passwd, Fname, Lname);
+	resgiser(email, passwd, Fname, Lname);
 }
 
-function preAuth(email, pass, doc){
-	if(!doc){
-		RegForm();
-		$('#login').modal();
+function preAuth(email, pass, data){
+	//console.log('preAuth');
+	if(!data){
+		$('#resgister').modal();
 	}
 	else{
-		SignIn(email, pass, doc, 0);
+		SignIn(email, pass, data, 0);
 	}
 }
 
 //uses data given to build page spesific to the user [note]: type is to indcate 
 //if sign-in is from login (0) or register (1)  
-function SignIn(email, pass, doc, loc){
-	console.log(email, pass, doc, loc);
+function SignIn(email, pass, data, loc){
+	console.log(email, pass, data, loc);
 }
 
 //uses data to create a user in the FireBase DataBase them sign user in 
-function Resgiser(email, pass, first, last){
+function resgiser(email, pass, first, last){
+	//console.log('resgiser');
+	var key = randomStr(16);
+	pass = encrypt(pass, key); 
 	db.collection("users").doc(email).set({
-		
+		password: pass, 
+		first_name: first, 
+		last_name: last, 
+		key: key
 	}).then(function(){
 		
 	}).catch(function(){
-
-	});
-	firebase.ref('user/' + email).set({
-		password: pass,
-		first_name: first,
-		last_name: last
+		console.log('EVERYTHING WANT TO SHIT');
 	});
 	SignIn(email, pass, 1)
 }
 
-//displays the register form to the user and hides the login form
-function RegForm(){	
-	$('#resgiser_form').show();
-	$('#login_form').hide();
-	$('#log_title').text('Resgister');
+function CheckDom(){
+	if(!location.hostname.match('the403.tk')){
+		window.location.replace("/html/move.html");
+	}
 }
 
-function CheckDom(){
-	
+function encrypt(value, key){
+	var x = CryptoJS.AES.encrypt(value, key);
+	return x; 
+}
+
+function decrypt(value, key){
+	var x = CryptoJS.AES.decrypt(value, key);
+	return x.toString(CryptoJS.enc.Utf8);
+}
+
+function randomStr(length){
+	var res =""; 
+	for (var i = 0; i < length; i++) {
+		var x = Math.floor((Math.random()*63)+33); 
+		res += String.fromCharCode(x);
+	}
+	return res; 
+}
+
+function setCookie(name, data, exp){
+	var d = new Date();
+ 	d.setTime(d.getTime() + (exp * 24 * 60 * 60 * 1000));
+ 	var expires = "expires="+d.toUTCString();
+ 	document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
 //runs on every startup of the page
@@ -111,9 +135,6 @@ $(document).ready(function(){
 		$("body").css("background-color","black");
 		$("html").css("background-color","black");
 	}
-	//the above changes the site to a dark theme at night;
-	$('#resgiser_form').hide();
-	$('#reg_btn').hide();
 });
 
 //displays the login dropdown when button is clicked 
