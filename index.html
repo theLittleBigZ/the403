@@ -54,15 +54,15 @@
 	    			<div class="modal-body">
 	    				<form id="login_form">
 	    					<label>Email:</label>
-	    					<input id="email_input" type="email">
+	    					<input id="email_login" type="email">
 	    					<br>
 	    					<label>Password:</label>
-	    					<input id="password_input" type="password">
+	    					<input id="password_login" type="password">
 	    				</form>
 	    			</div>
 	    			<div class="modal-footer">
 	    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	    				<button id="log_btn" type="button" class="btn btn-primary" data-dismiss="modal" onclick="CheckUser();">Login</button>
+	    				<button id="log_btn" type="button" class="btn btn-primary" data-dismiss="modal" onclick="checkUser('l');">Login</button>
 	    			</div>
 	    		</div>
 	    	</div>
@@ -91,7 +91,7 @@
 	    			</div>
 	    			<div class="modal-footer">
 	    				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	    				<button id="reg_btn" type="button" class="btn btn-primary" data-dismiss="modal" onclick="preReg();">Register</button>
+	    				<button id="reg_btn" type="button" class="btn btn-primary" data-dismiss="modal" onclick="checkUser('r');">Register</button>
 	    			</div>
 	    		</div>
 	    	</div>
@@ -101,6 +101,7 @@
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 	    <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
 	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+	    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 	    <script src="assets/js/ipcatch.js"></script>
 	  	<script src="assets/js/script.js"></script>
 	</body>
