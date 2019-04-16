@@ -9,12 +9,16 @@
 	    <link rel="stylesheet" href="assets/css/sheet.css">
 	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+	    <link rel="stylesheet" type="text/css" href="assets/css/">
 	</head>
 
 	<body>
 	    <div class="container">
 	        <div class="row">
-	            <div class="col"></div>
+	            <div class="col">
+	            	<input id="DM" type="checkbox">
+	            	<label>Dark Mode</label>
+	            </div>
 	            <div class="col-sm-auto">
 	                <center>
 	                    <div id="title">
@@ -42,6 +46,9 @@
 	                <h1>What Should I Do?</h1>
 	                <p id="btnStart">Click me!</p>
 	            </div>
+	            <center>
+	            	<h1 id="thePath" hidden><a href="redirect.php">Show me the way</a></h1>
+	            </center>
 	        </div>
 	    </div>
 	    <div class="modal fade" id="login">
