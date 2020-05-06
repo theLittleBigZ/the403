@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <title>ESCALATE</title>
+	    <link rel="icon" href="https://scontent-yyz1-1.cdninstagram.com/vp/3103f4ac47e38a045fbfc146a45cc8f8/5CDD5C62/t51.2885-19/s320x320/36653890_2092251874431985_7848861405531865088_n.jpg?_nc_ht=scontent-yyz1-1.cdninstagram.com" type="image/gif"> 
+	    <!--//////// CSS ///////////-->
+	    <!-- Jquery.Scollbar CSS -->
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.scrollbar/0.2.11/jquery.scrollbar.css">
+	    <!-- Font Awesome -->
+	    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	    <!-- Iconate CSS-->
+	    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/iconate/0.2.7/iconate.min.css">
+	    <!-- BootStrap CSS -->
+	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	    <!-- FullPage CSS -->
+	    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.min.css">
+	    <!--Full-Calendar-->
+	    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css">
+	    <!--My CSS-->
+	    <link rel="stylesheet" href="sheet.css">
+	</head>
+	<body>
+	    <div id="fullpage">
+	    	<div class="section">
+	    		<div class="container-fluid">
+	    			<div class="row">
+	    				<canvas id="canvas"></canvas>
+	    			</div>
+	                <div class="row">
+	                    <center>
+	                        <div>
+	                            <h1 id="logo">ESCALATE</h1>
+	                        </div>
+	                    </center>
+	                </div>
+	                <div class="row">
+	                	<center>
+		                	<a href="https://docs.google.com/forms/d/e/1FAIpQLScuMxzfluoi1VJzS1cvbAV_NF2tLNjSy-Ccih2UYGGvCpdKUQ/viewform">
+		                		<div class="button">
+		                			<center>
+		                				<p id="btn">Sign-Up</p>
+		                			</center>
+		                		</div>
+		                	</a>
+	                	</center>
+	                </div>
+	    		</div>
+	    	</div>
+	    	<div class="section">
+	    		<div class="container-fluid">
+	    			<center>
+	    				<div id='calendar'></div>
+	    				<div>
+	    					<h1 id="countT">Time till Event:</h1>
+	    					<p id="count"></p>
+	    				</div>
+	    			</center>
+	    		</div>
+	    	</div>
+	    </div>
+	</body>
+	<!--////////// JS //////////-->
+	<!-- Jquery JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+	<!-- Full-Calendar -->
+	<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/moment.min.js'></script>
+	<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery.min.js'></script>
+	<script src="http://fullcalendar.io/js/fullcalendar-2.1.1/lib/jquery-ui.custom.min.js"></script>
+	<script src='http://fullcalendar.io/js/fullcalendar-2.1.1/fullcalendar.min.js'></script>
+	<script>
+	    $(document).ready(function() {
+	        $('#calendar').fullCalendar({
+	            defaultDate: '2019-03-11',
+	            editable: false,
+	            themeSystem: 'bootstrap3',
+	             events: [
+		            {
+		              title: 'ESCALATE',
+		              start: '2019-03-11'
+		            }
+		          ]
+	        });
+	    });
+	</script>
+	<!-- BootStrap JS -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- FullPage JS -->
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.4/jquery.fullpage.min.js'></script>
+	<!-- My JS-->
+	<script src="script.js"></script>
+</html>
