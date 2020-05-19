@@ -1,0 +1,12 @@
+#logo {
+    color: red;
+}
+
+#titleBox {
+    display: ruby;
+    text-align: center;
+}
+
+.center{
+    padding: 25vh 0;
+}
