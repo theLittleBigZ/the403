@@ -2,7 +2,7 @@ let user;
 firebase.initializeApp(firebaseConfig);
 
 if(firebase){
-    console.log("%c FireBase Has Been Loaded", "color:orange; font-weight: bold;");
+    console.log("%c Firebase Has Been Loaded", "color:orange; font-weight: bold;");
 }
 
 function login() {
@@ -22,6 +22,18 @@ function login() {
     });
 }
 
+function userSignedIn() {
+    console.log("setting up signed in user view");
+    //TODO do the signed up user view
+}
+
+function userSignedOut() {
+    console.log("setting up signed out user view");
+    //TODO do the signed out user view
+}
+
+
+
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         var displayName = user.displayName;
@@ -32,6 +44,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         var uid = user.uid;
         var providerData = user.providerData;
         console.log("%c User Logged In", "color:green;");
+        userSignedIn();
         //TODO add Sign Out user button
     } else {
         console.log("%c No User Logged In / Exists", "color:red;");

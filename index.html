@@ -47,7 +47,36 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
+                    <h5 class="modal-title" id="LoginModalLongTitle">Login</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <label>Email:</label>
+                        <input type="email" name="userEmail" value="Your Email">
+                        <br>
+                        <label>Password:</label>
+                        <input type="password" name="userPass" value="Your Password">
+                    </form>
+                    <p>Don't have an account? <button data-toggle="modal" data-target="#regModal">click here</button></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="login();">login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="regModal" tabindex="-1" role="dialog" aria-labelledby="regModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="regModalLongTitle">Register</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -63,7 +92,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" onclick="login();">login</button>
+                    <button type="button" class="btn btn-primary" onclick="register()">Register</button>
                 </div>
             </div>
         </div>
