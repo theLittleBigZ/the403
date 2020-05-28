@@ -53,14 +53,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="loginForm">
                         <label>Email:</label>
-                        <input type="email" name="userEmail" value="Your Email">
+                        <input type="email" name="email" placeholder="Your Email">
                         <br>
                         <label>Password:</label>
-                        <input type="password" name="userPass" value="Your Password">
+                        <input type="password" name="password" placeholder="Your Password">
                     </form>
-                    <p>Don't have an account? <button data-toggle="modal" data-target="#regModal">click here</button></p>
+                    <br>
+                    <p>Don't have an account? <button class="btn btn-outline-info" onclick="modalController({loginModal:'hide',regModal:'show'})">Create an Account</button></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -82,13 +83,18 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="regForm">
                         <label>Email:</label>
-                        <input type="email" name="userEmail" value="Your Email">
+                        <input type="email" name="email" placeholder="Your Email">
+                        <br>
+                        <label>Name:</label>
+                        <input type="text" name="displayName" placeholder="Your Display Name">
                         <br>
                         <label>Password:</label>
-                        <input type="password" name="userPass" value="Your Password">
+                        <input type="password" name="password" placeholder="Your Password">
                     </form>
+                    <br>
+                    <p>Have an account? <button class="btn btn-outline-info" onclick="modalController({loginModal:'show',regModal:'hide'})">Login</button></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -1,25 +1,62 @@
-let user;
 firebase.initializeApp(firebaseConfig);
-
 if(firebase){
     console.log("%c Firebase Has Been Loaded", "color:orange; font-weight: bold;");
 }
 
-function login() {
-    console.log("Button Clicked");
-    //TODO get user and pass for input boxes
-    let password = "Password123";
-    let email = "zeeshanbadr@gmail.com";
+const x = document.cookie;
+if (x.search('remember') == -1){
+    firebase.auth().signOut();
+}
 
-    firebase
-        .auth()
+
+function login() {
+    console.log("Login");
+    let fields = $("#loginForm").serializeArray();
+    let email = fields[0]['value'];
+    let password = fields[1]['value'];
+
+    firebase.auth()
         .signInWithEmailAndPassword(email, password)
+        .then(function(user){
+            modalController({loginModal:'hide'});
+        })
         .catch(function(error) {
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorCode, errorMessage);
             //TODO add error handler
     });
+}
+
+function register() {
+    console.log("Register");
+    let fields = $("#regForm").serializeArray();
+
+    let email = fields[0]['value'];
+    let displayName = fields[1]['value'];
+    let password = fields[2]['value'];
+
+    firebase.auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then(function(user) {
+            //console.log("user data:", user['user']);
+            let currentUser = firebase.auth().currentUser;
+
+            currentUser.updateProfile({
+                displayName: displayName,
+            }).then(function() {
+                modalController({regModal:'hide'});
+            }).catch(function(error) {
+                console.log(error);
+                //TODO add error handler
+            });
+        })
+        .catch(function(error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+            //TODO add error handler
+        });
 }
 
 function userSignedIn() {
@@ -32,23 +69,27 @@ function userSignedOut() {
     //TODO do the signed out user view
 }
 
-
+function modalController (modals) {
+    for(name in modals){
+        $("#" + String(name)).modal(modals[name]);
+    }
+}
 
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        var displayName = user.displayName;
-        var email = user.email;
-        var emailVerified = user.emailVerified;
-        var photoURL = user.photoURL;
-        var isAnonymous = user.isAnonymous;
-        var uid = user.uid;
-        var providerData = user.providerData;
+        /**var displayName = user.displayName; //check
+        var email = user.email; //check
+        var emailVerified = user.emailVerified; //uncheck
+        var photoURL = user.photoURL; //check
+        var isAnonymous = user.isAnonymous; //uncheck
+        var uid = user.uid; //uncheck
+        var providerData = user.providerData; //uncheck**/
+
         console.log("%c User Logged In", "color:green;");
         userSignedIn();
-        //TODO add Sign Out user button
     } else {
         console.log("%c No User Logged In / Exists", "color:red;");
-        //TODO Hide Sign Out user button
+        userSignedOut();
     }
 });
 
