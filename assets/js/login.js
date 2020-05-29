@@ -1,10 +1,14 @@
 firebase.initializeApp(firebaseConfig);
-if(firebase){
+var db = firebase.firestore();
+if(firebase && db){
     console.log("%c Firebase Has Been Loaded", "color:orange; font-weight: bold;");
+}else{
+    console.log("%c Error Loading Firebase", "color:red; font-weight: bold;");
 }
 
 const x = document.cookie;
-if (x.search('remember') == -1){
+console.log(x);
+if (x.search('logged') == -1){
     firebase.auth().signOut();
 }
 
@@ -18,6 +22,7 @@ function login() {
     firebase.auth()
         .signInWithEmailAndPassword(email, password)
         .then(function(user){
+            document.cookie = "state=logged;";
             modalController({loginModal:'hide'});
         })
         .catch(function(error) {
@@ -61,7 +66,14 @@ function register() {
 
 function userSignedIn() {
     console.log("setting up signed in user view");
-    //TODO do the signed up user view
+
+    db.collection("content").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            console.log(`${doc.id} => ${doc.data()}`);
+        });
+    });
+
+
 }
 
 function userSignedOut() {
