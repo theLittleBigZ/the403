@@ -35,6 +35,7 @@ function login() {
         .then(function(user){
             setCookie("state", "logged", 2);
             modalController({loginModal:'hide'});
+            userSignedIn();
         })
         .catch(function(error) {
             var errorCode = error.code;
@@ -62,6 +63,7 @@ function register() {
                 displayName: displayName,
             }).then(function() {
                 modalController({regModal:'hide'});
+                userSignedIn();
             }).catch(function(error) {
                 console.log(error);
                 //TODO add error handler
@@ -131,7 +133,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         var providerData = user.providerData; //uncheck**/
 
         console.log("%c User Logged In", "color:green;");
-        userSignedIn();
     } else {
         console.log("%c No User Logged In / Exists", "color:red;");
     }
