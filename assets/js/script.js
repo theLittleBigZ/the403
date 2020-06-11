@@ -1,17 +1,28 @@
-firebase.initializeApp(firebaseConfig);
-var db = firebase.firestore();
-if(firebase && db){
-    console.log("%c Firebase Has Been Loaded", "color:orange; font-weight: bold;");
-}else{
-    console.log("%c Error Loading Firebase", "color:red; font-weight: bold;");
-}
-
-const x = document.cookie;
-console.log(x);
-if (x.search('logged') == -1){
+if(getCookie('state') != "logged" || getCookie('state') == ""){
     firebase.auth().signOut();
 }
 
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+    }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 function login() {
     console.log("Login");
@@ -22,7 +33,7 @@ function login() {
     firebase.auth()
         .signInWithEmailAndPassword(email, password)
         .then(function(user){
-            document.cookie = "state=logged;";
+            setCookie("state", "logged", 2);
             modalController({loginModal:'hide'});
         })
         .catch(function(error) {
@@ -66,19 +77,41 @@ function register() {
 
 function userSignedIn() {
     console.log("setting up signed in user view");
-
-    db.collection("content").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            console.log(`${doc.id} => ${doc.data()}`);
-        });
+    let content = db.collection("content").doc("index");
+    content.get().then(function(doc){
+        if(doc.exists){
+            let dbData = doc.data();
+            $("head").html(dbData['header']);
+            $("body").html(dbData['body']);
+        }
+        else{
+            console.log("No such document!, this is a very big problem");
+        }
+    }).catch(function(err){
+        console.log(err);
+        alert("okay so there was a bit of a problem try contacting theLittleBigZ ans ask him to get his shit together");
     });
-
-
 }
 
 function userSignedOut() {
     console.log("setting up signed out user view");
-    //TODO do the signed out user view
+    let content = db.collection("content").doc("login");
+    content.get().then(function(doc){
+        if(doc.exists){
+            let dbData = doc.data();
+            $("head").html(dbData['header']);
+            $("body").html(dbData['body']);
+            firebase.auth().signOut();
+            location.reload();
+        }
+        else{
+            console.log("No such document!, this is a very big problem");
+        }
+    }).catch(function(err){
+        console.log(err);
+        alert("okay so there was a bit of a problem try contacting theLittleBigZ ans ask him to get his shit together");
+        firebase.auth().signOut();
+    });
 }
 
 function modalController (modals) {
@@ -101,7 +134,6 @@ firebase.auth().onAuthStateChanged(function(user) {
         userSignedIn();
     } else {
         console.log("%c No User Logged In / Exists", "color:red;");
-        userSignedOut();
     }
 });
 
