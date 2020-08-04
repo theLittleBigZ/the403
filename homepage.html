@@ -8,26 +8,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/error.css">
+    <link rel="stylesheet" href="assets/css/main.css">
 </head>
 
 <body>
     <div class="jumbotron">
         <h1>Welcome to the403</h1>
+        <p>A blog/portfolio by theLittleBigZ</p>
+        <button class="btn btn-danger float-right" onclick="userSignedOut()">Sign Out</button>
     </div>
     <div class="container-fluid">
         <div class="row text-center">
             <div class="col-sm-6">
-                <h2>What is the403?</h2>
-                <p>an answer</p>
+                <h3>What is the403?</h3>
+                <p>
+                    So the403.ml, it's in essence a blog and a sorta portfolio I have made for myself.<br>
+                    My plan for the blog is to post updates on a (some what) weekly basis, about what? we'll find out but<br>
+                    it'll probably be project updates and University Life updates. As for the portfolio portion of the site<br>
+                    my plan is to show off some of my projects on this site and use it as a reference to point to, for a rough<br>
+                    idea of my programming ability.
+                </p>
                 <br>
-                <h2>Why is there a login?</h2>
-                <p>an answer</p>
+                <h3>Why is there a login?</h3>
+                <p>
+                    Well the sites called the403 so yeah... all jokes aside it's there just for fun and for me to test/experiment with<br>
+                    authentication in the future the plan is to setup use levels and based off your specific level you'll get certain perks<br>
+                    and access but thats a future thing.
+                </p>
                 <br>
-                <
+                <h3>Isn't this like the the404?</h3>
+                <p>
+                    First off, Hi Owen, and if you're not Owen then Hi! and yes this site is (very) similar to the404 in terms of content mostly<br>
+                    because I was the one that started the404, then gave it to Owen. after I handed the404 over I started this the403 and well here<br>
+                    we are today.
+                </p>
             </div>
             <div class="col-sm-6">
-                <h1>this is a centered thingy</h1>
+                <h1>Posts</h1>
+                <div id="posts">
+                    <!--this is a thing-->
+                    <div class="textPost">
+                        <h4>Welcome to the403 v.1</h4>
+                        <p>So this is the first post on the403!!! more to come!!!</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -48,7 +72,7 @@
     <script defer src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"
         integrity="sha384-ujbKXb9V3HdK7jcWL6kHL1c+2Lj4MR4Gkjl7UtwpSHg/ClpViddK9TI7yU53frPN"
         crossorigin="anonymous"></script>
-    <script src="assets/js/login.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>
