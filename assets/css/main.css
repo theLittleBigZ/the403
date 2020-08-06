@@ -1,12 +1,16 @@
-#logo {
+.logo{
+    margin: 2%;
+}
+.fa-ban{
     color: red;
 }
-
-#titleBox {
-    display: ruby;
+.center{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
     text-align: center;
 }
-
-.center{
-    padding: 25vh 0;
+.id{
+    color: red;
+    background-color: red;
 }
