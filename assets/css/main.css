@@ -1,8 +1,41 @@
+/*******************************************
+New Color Palette:
+    #41FF00
+    #FFFDED
+    #FF37A6
+    #393E41
+    #FF4A1C
+    #CFCCD6
+    #89B0AE
+*******************************************/
+@font-face {
+    font-family: bit;
+    src: url(../font/bitwise.ttf);
+}
+h1{
+    font-family: bit;
+}
+body{
+    background-color: black;
+    color: #41FF00;
+    font-family: bit;
+}
+.spacer{
+    height: 25vh;
+}
 .logo{
     margin: 2%;
 }
+.full{
+    width: 100vw;
+}
+.btn-def{
+    color: #FFFDED;
+    background-color: #FF37A6;
+    border-color: #FF37A6;
+}
 .fa-ban{
-    color: red;
+    color: #FF4A1C;
 }
 .center{
     margin: auto;
@@ -11,5 +44,11 @@
     text-align: center;
 }
 .id{
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.226);
+    border: 1px solid rgba(255, 0, 0);
 }
+#logoText{
+    color: #41FF00;
+    font-family: bit;
+    font-size: 65%;
+}s
