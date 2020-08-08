@@ -1,3 +1,3 @@
-$('signInBtn').click(function() {
-    $('#loginM').modal('show');
+$( "#signInBtn" ).click(function() {
+    $("#loginM").modal('show');
 });
