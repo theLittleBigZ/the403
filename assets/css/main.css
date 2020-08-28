@@ -12,49 +12,54 @@ New Color Palette:
     font-family: bit;
     src: url(../font/bitwise.ttf);
 }
-hr{
-    color: #FFFDED;
+hr {
+    color: #fffded;
 }
-h1{
+h1 {
     font-family: bit;
 }
-body{
+body {
     background-color: black;
-    color: #41FF00;
+    color: #41ff00;
     font-family: bit;
 }
-.spacer{
+.spacer {
     height: 25vh;
 }
-.logo{
+.logo {
     margin: 2%;
 }
-.full{
+.full {
     width: 100vw;
 }
-.btn-def{
-    color: #FFFDED;
-    background-color: #FF37A6;
-    border-color: #FF37A6;
+.btn-def {
+    color: #fffded;
+    background-color: #ff37a6;
+    border-color: #ff37a6;
 }
-.fa-ban{
-    color: #FF4A1C;
+.fa-ban {
+    color: #ff4a1c;
 }
-.center{
+.center {
     margin: auto;
     width: 50%;
     padding: 10px;
     text-align: center;
 }
-.id{
+.id {
     background-color: rgba(255, 0, 0, 0.226);
     border: 1px solid rgba(255, 0, 0);
 }
-.modal-header, .modal-body, .modal-footer{
-    background-color: #393E41;
+.modal-header,
+.modal-body,
+.modal-footer {
+    background-color: #393e41;
 }
-#logoText{
-    color: #41FF00;
+#logoText {
+    color: #41ff00;
     font-family: bit;
     font-size: 65%;
+}
+#signOutBtn {
+    margin-left: 5%;
 }
