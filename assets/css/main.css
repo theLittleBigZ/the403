@@ -1,65 +1,15 @@
 /*******************************************
 New Color Palette:
-    #41FF00
-    #FFFDED
-    #FF37A6
-    #393E41
-    #FF4A1C
-    #CFCCD6
-    #89B0AE
+    #BAC1B8
+    #58A4B0
+    #0C7C59
+    #2B303A
+    #D64933
 *******************************************/
 @font-face {
     font-family: bit;
     src: url(../font/bitwise.ttf);
 }
-hr {
-    color: #fffded;
-}
-h1 {
-    font-family: bit;
-}
-body {
-    background-color: black;
-    color: #41ff00;
-    font-family: bit;
-}
-.spacer {
-    height: 25vh;
-}
-.logo {
-    margin: 2%;
-}
-.full {
-    width: 100vw;
-}
-.btn-def {
-    color: #fffded;
-    background-color: #ff37a6;
-    border-color: #ff37a6;
-}
-.fa-ban {
-    color: #ff4a1c;
-}
-.center {
-    margin: auto;
-    width: 50%;
-    padding: 10px;
-    text-align: center;
-}
-.id {
-    background-color: rgba(255, 0, 0, 0.226);
-    border: 1px solid rgba(255, 0, 0);
-}
-.modal-header,
-.modal-body,
-.modal-footer {
-    background-color: #393e41;
-}
-#logoText {
-    color: #41ff00;
-    font-family: bit;
-    font-size: 65%;
-}
-#signOutBtn {
-    margin-left: 5%;
+html, body, div, span{
+    background-color: #BAC1B8;
 }
