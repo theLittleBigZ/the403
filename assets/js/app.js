@@ -1,3 +1,6 @@
+function modalController(modal, options){
+    
+}
 //Testing Code
 if (window.location.href.includes("127.0.0.1")) {
     console.log(firebase);
@@ -21,6 +24,9 @@ $("#login").click(function () {
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorCode, errorMessage);
+            if(errorCode == "auth/wrong-password"){
+
+            }
         });
     $("#loginM").modal("hide");
 
