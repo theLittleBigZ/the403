@@ -1,2 +1,0 @@
-#Redirect an entire site:
-Redirect 301 / http://www.the404.nl
