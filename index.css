@@ -1,0 +1,39 @@
+
+body{
+    background-color: black;
+}
+
+h3, h1{
+    color: white;
+}
+.title{
+    margin-left: 10px;
+}
+.center {
+    position: absolute;
+    left: 30%;
+    top: 30%;
+    -webkit-transform: translate(-30%, -30%);
+    transform: translate(-30%, -30%);
+}
+
+.ban-icon-container{
+    position: absolute;
+    top: -10px;
+    left: 20%;
+}
+    
+.ban-icon-circle{
+    width: 290px;
+    border: 8px solid red;
+    background: transparent;
+    height: 290px;
+    border-radius: 100%;
+}
+    
+.ban-icon-bar{
+    height: 0px;
+    border: 7px solid red;
+    transform: translate(-1px, -151px) rotate(50deg);
+    width: 280px;
+}
