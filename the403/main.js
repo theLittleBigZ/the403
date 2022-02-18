@@ -16,7 +16,7 @@ renderer.render(scene, camera);
 
 
 const geoTorus = new THREE.TorusGeometry(15, 0.87, 21, 52);
-const material = new THREE.MeshBasicMaterial({ color: 0xFF0000, wireframe: false });
+const material = new THREE.MeshStandardMaterial({ color: 0xFF0000 });
 const torus = new THREE.Mesh(geoTorus, material);
 
 const geoBox = new THREE.BoxGeometry(5, 29, 2, 10, 10, 10);
@@ -26,7 +26,12 @@ const ban = new THREE.Group();
 ban.add(torus);
 ban.add(box);
 
+const pLight = new THREE.PointLight(0xffffff);
+//const aLight = new THREE.AmbientLight(0x00FFFF);
+pLight.position.set(1, 2, 30);
+
 scene.add(ban);
+scene.add(pLight); //scene.add(pLight, aLight);
 //scene.add(torus);
 //scene.add(box);
 

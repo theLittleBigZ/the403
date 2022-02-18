@@ -3,3 +3,14 @@ canvas{
   top: 0;
   left: 0;
 }
+
+.center {
+  text-align: center;
+  position: absolute;
+  color: white !important;
+  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  padding: 10px;
+}
