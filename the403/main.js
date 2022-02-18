@@ -15,17 +15,26 @@ camera.position.setZ(30);
 renderer.render(scene, camera);
 
 
-const geometry = new THREE.TorusGeometry(15, 0.87, 21, 52);
-const material = new THREE.MeshBasicMaterial({ color: 0xFF0000, wireframe: true });
-const torus = new THREE.Mesh(geometry, material);
+const geoTorus = new THREE.TorusGeometry(15, 0.87, 21, 52);
+const material = new THREE.MeshBasicMaterial({ color: 0xFF0000, wireframe: false });
+const torus = new THREE.Mesh(geoTorus, material);
 
-scene.add(torus);
+const geoBox = new THREE.BoxGeometry(5, 29, 2, 10, 10, 10);
+const box = new THREE.Mesh(geoBox, material);
+
+const ban = new THREE.Group();
+ban.add(torus);
+ban.add(box);
+
+scene.add(ban);
+//scene.add(torus);
+//scene.add(box);
 
 function animate() {
   requestAnimationFrame(animate);
-  torus.rotation.x += 0.01; //Math.random();
-  torus.rotation.y += 0.01; //Math.random();
-  torus.rotation.z += 0.01; //Math.random();
+  ban.rotation.x += 0.01; //Math.random();
+  ban.rotation.y += 0.01; //Math.random();
+  ban.rotation.z += 0.01; //Math.random();
   renderer.render(scene, camera);
 }
 
