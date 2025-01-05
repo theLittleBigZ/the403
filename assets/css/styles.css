@@ -8,19 +8,29 @@ body {
     overflow: hidden;
 }
 
+canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    font-size: 0.9rem;
+    color: #888;
+}
+
 #landing {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100vh;
     position: relative;
-}
-
-canvas {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
 }
 
 #text-overlay {
@@ -41,14 +51,4 @@ canvas {
     position: absolute;
     transform: rotate(0deg);
     text-align: center;
-}
-
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-    padding: 10px;
-    font-size: 0.9rem;
-    color: #888;
 }
