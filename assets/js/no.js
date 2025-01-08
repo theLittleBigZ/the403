@@ -11,7 +11,7 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 camera.position.z = 5;
 
 // Lighting
-const light = new THREE.PointLight(0xffffff, 1.5, 100, 5);
+const light = new THREE.PointLight(0xffffff, 1.5, 150, 5);
 light.position.set(5, 5, 5);
 light.castShadow = true;
 scene.add(light);

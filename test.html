@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the403.xyz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+        }
+
+        .section {
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: background-color 0.5s ease;
+        }
+
+        #landing {
+            background-color: #000;
+            color: #fff;
+            position: relative;
+        }
+
+        #pink-section {
+            background-color: #ffc0cb;
+            color: #000;
+        }
+
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        #text-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="landing" class="section">
+        <canvas id="symbol"></canvas>
+        <div id="text-overlay">
+            <div class="title">the403</div>
+            <div class="subtitle">By Zeeshan Badr</div>
+        </div>
+    </div>
+
+    <div id="pink-section" class="section">
+        <h1>Welcome to the next section!</h1>
+    </div>
+
+    <footer>
+        &copy; 2025 Zeeshan Badr. All rights reserved.
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/FontLoader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/TextGeometry.js"></script>
+    <script>
+        // JavaScript for interactive 3D rendering and animations
+        const canvas = document.getElementById('symbol');
+        const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+        renderer.shadowMap.enabled = true;
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 5;
+
+        // Lighting
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(10, 10, 10);
+        light.castShadow = true;
+        scene.add(light);
+
+        const ambientLight = new THREE.AmbientLight(0x404040); // Soft ambient light
+        scene.add(ambientLight);
+
+        // Materials with updated colors
+        const redMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, metalness: 0.5, roughness: 0.2 });
+        const whiteMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+
+        // Create the "No" symbol
+        const outerTorusGeometry = new THREE.TorusGeometry(1, 0.1, 16, 100);
+        const barGeometry = new THREE.BoxGeometry(1.4, 0.15, 0.15);
+
+        const outerTorus = new THREE.Mesh(outerTorusGeometry, redMaterial);
+        outerTorus.castShadow = true;
+        outerTorus.receiveShadow = true;
+
+        const bar = new THREE.Mesh(barGeometry, redMaterial);
+        bar.castShadow = true;
+        bar.receiveShadow = true;
+
+        // Rotate the bar to create the "No" symbol
+        bar.rotation.z = Math.PI / 4;
+
+        scene.add(outerTorus);
+        scene.add(bar);
+
+        // Add text to the bar and torus
+        const fontLoader = new THREE.FontLoader();
+
+        fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', (font) => {
+            // Text on the bar
+            const barTextGeometry = new THREE.TextGeometry('the403', {
+                font: font,
+                size: 0.1,
+                height: 0.05,
+            });
+            const barText = new THREE.Mesh(barTextGeometry, whiteMaterial);
+            barText.rotation.z = Math.PI / 4;
+            barText.position.set(-0.7, -0.05, 0.1); // Adjusted position for alignment
+            barText.castShadow = true;
+            bar.add(barText); // Attach to the bar
+
+            // Create curved text for the torus
+            const torusText = new THREE.Group();
+            const text = 'By Zeeshan Badr';
+            const radius = 1; // Match the torus radius
+
+            for (let i = 0; i < text.length; i++) {
+                const charGeometry = new THREE.TextGeometry(text[i], {
+                    font: font,
+                    size: 0.05,
+                    height: 0.02,
+                    curveSegments: 12,
+                });
+                const charMesh = new THREE.Mesh(charGeometry, whiteMaterial);
+
+                const angle = (i / text.length) * Math.PI * 2;
+                charMesh.position.set(
+                    Math.cos(angle) * radius,
+                    Math.sin(angle) * radius,
+                    0.1
+                );
+                charMesh.rotation.set(0, 0, -angle);
+                charMesh.castShadow = true;
+                torusText.add(charMesh);
+            }
+
+            outerTorus.add(torusText);
+        });
+
+        const animate = () => {
+            requestAnimationFrame(animate);
+
+            outerTorus.rotation.x += 0.01;
+            outerTorus.rotation.y += 0.01;
+            bar.rotation.x += 0.01;
+            bar.rotation.y += 0.01;
+
+            renderer.render(scene, camera);
+        };
+
+        // Mouse interaction for light position
+        window.addEventListener('mousemove', (event) => {
+            const { clientX, clientY } = event;
+            const x = (clientX / window.innerWidth) * 2 - 1;
+            const y = -(clientY / window.innerHeight) * 2 + 1;
+
+            light.position.set(x * 10, y * 10, 10);
+        });
+
+        // Resize handling
+        window.addEventListener('resize', () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        // Center canvas content
+        const resizeCanvasToCenter = () => {
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            camera.position.set(0, 0, 5);
+        };
+
+        window.addEventListener('resize', resizeCanvasToCenter);
+
+        animate();
+
+        // Snap scrolling
+        const sections = document.querySelectorAll('.section');
+        let isScrolling = false;
+
+        const snapScroll = () => {
+            if (isScrolling) return;
+
+            isScrolling = true;
+
+            const scrollPosition = window.scrollY;
+            const sectionHeight = window.innerHeight;
+            const currentIndex = Math.round(scrollPosition / sectionHeight);
+
+            window.scrollTo({
+                top: currentIndex * sectionHeight,
+                behavior: 'smooth',
+            });
+
+            setTimeout(() => {
+                isScrolling = false;
+            }, 1000); // Prevent multiple snaps during smooth scrolling
+        };
+
+        window.addEventListener('scroll', () => {
+            const scrollPosition = window.scrollY;
+            const sectionHeight = window.innerHeight;
+
+            // Determine the direction of the scroll
+            const direction = scrollPosition > window.lastScrollPosition ? 1 : -1;
+            window.lastScrollPosition = scrollPosition;
+
+            // Find the nearest section based on direction
+            const currentIndex = Math.floor(scrollPosition / sectionHeight);
+            const nextIndex = Math.max(0, Math.min(sections.length - 1, currentIndex + direction));
+
+            if (!isScrolling && currentIndex !== nextIndex) {
+                isScrolling = true;
+
+                window.scrollTo({
+                    top: nextIndex * sectionHeight,
+                    behavior: 'smooth',
+                });
+
+                setTimeout(() => {
+                    isScrolling = false;
+                }, 1000);
+            }
+        });
+    </script>
+</body>
+
+</html>
