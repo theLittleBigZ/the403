@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Save Cody — Family Check-In</title>
+    <style>
+        :root {
+            font-family:
+                system-ui,
+                -apple-system,
+                sans-serif;
+            color: #f7f7ff;
+            background: #101b36;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 14px;
+            max-width: 680px;
+            margin-inline: auto;
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin: 12px 0 3px;
+            color: #ffd06c;
+        }
+
+        p {
+            line-height: 1.4;
+        }
+
+        small,
+        .muted {
+            color: #bfc8d9;
+        }
+
+        .panel {
+            background: #1d2b4b;
+            border: 1px solid #475a7e;
+            border-radius: 14px;
+            padding: 16px;
+            margin: 14px 0;
+        }
+
+        button,
+        input {
+            font: inherit;
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        button {
+            background: #f5bc4b;
+            color: #15203a;
+            border: 0;
+            font-weight: 700;
+            margin: 4px 4px 4px 0;
+            cursor: pointer;
+        }
+
+        button.secondary {
+            background: #dce4f2;
+        }
+
+        button.danger {
+            background: #f7a8a8;
+        }
+
+        button:disabled {
+            opacity: 0.4;
+        }
+
+        input {
+            width: 100%;
+            background: #fff;
+            border: 2px solid #b9c9e3;
+            color: #17243d;
+        }
+
+        label {
+            display: block;
+            margin: 8px 0 5px;
+            font-weight: 650;
+        }
+
+        video {
+            width: 100%;
+            max-height: 280px;
+            background: black;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        #camera {
+            display: none;
+        }
+
+        .good {
+            color: #9df0b4;
+        }
+
+        .warn {
+            color: #ffd06c;
+        }
+
+        .bad {
+            color: #ffb3b3;
+        }
+
+        .result {
+            font-size: 1.05rem;
+        }
+
+        .result h2 {
+            margin: 4px 0 10px;
+        }
+
+        #match {
+            display: none;
+        }
+
+        .count {
+            font-weight: 700;
+        }
+
+        details {
+            margin-top: 14px;
+        }
+
+        summary {
+            cursor: pointer;
+        }
+
+        ul {
+            padding-left: 22px;
+        }
+
+        #notice {
+            min-height: 22px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #4b5a79;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🥷 Operation: Save Cody!</h1>
+    <div class="muted">Family check-in • One passport per household • Private offline registration list</div>
+    <div class="panel">
+        <div class="count" id="stats"></div>
+        <p id="notice" aria-live="polite">Ready to scan.</p>
+        <button id="start">📷 Start Camera</button><button id="stop" class="secondary" style="display: none">Stop
+            Camera</button>
+        <div id="camera"><video id="video" autoplay playsinline muted></video></div>
+        <label for="qr">Scanned QR value / registration number</label><input id="qr" autocomplete="off"
+            autocapitalize="off" placeholder="Scan or paste QR value" /><button id="lookup">
+            Find Family
+        </button>
+        <details>
+            <summary>Camera won't scan? Try a photo</summary>
+            <p class="muted">Take a clear picture of the QR code using the tablet camera.</p>
+            <input id="photo" type="file" accept="image/*" capture="environment" />
+        </details>
+        <label for="search">Or search guardian name</label><input id="search"
+            placeholder="Guardian name or registration number" /><button id="findName" class="secondary">
+            Search Name
+        </button>
+        <div id="matches"></div>
+    </div>
+    <div class="panel result" id="match">
+        <h2 id="family"></h2>
+        <div id="info"></div>
+        <hr />
+        <label for="passport">Passport number (optional)</label><input id="passport" placeholder="e.g. 12" />
+        <p id="status"></p>
+        <button id="confirm">✓ Confirm Passport Issued</button><button id="undo" class="danger"
+            style="display: none">Undo Check-In</button>
+    </div>
+    <div class="panel">
+        <button id="export" class="secondary">⬇ Export Check-In CSV</button>
+        <p class="muted">
+            Check-ins are saved only in this browser on this tablet. Export a backup periodically. Do not clear
+            Chrome site data or use Incognito mode. New registrations after this workbook was created will not
+            appear until the file is updated.
+        </p>
+    </div>
+    <script>
+        const REG = [
+            {
+                id: "DC-00100036",
+                qr: "DCE-CHECKIN:v1:WT0goOlk45HqYZvcw5_Dms35llr2pbbVLuB6iYePpTA",
+                guardian: "Mohamad Dafer",
+                children: ["Milo Dafer"],
+                status: "confirmed",
+                count: "1",
+            },
+            {
+                id: "DC-00100037",
+                qr: "DCE-CHECKIN:v1:WT0goOlk45HqYZvcw5_Dms35llr2pbbVLuB6iYePpTA",
+                guardian: "John Doe",
+                children: ["Jane Doe", "Johnny Doe"],
+                status: "confirmed",
+                count: "2",
+            },
+            {
+                id: "DC-00100038",
+                qr: "DCE-CHECKIN:v1:WT0goOlk45HqYZvcw5_Dms35llr2pbbVLuB6iYePpTA",
+                guardian: "Alice Smith",
+                children: ["Bob Smith"],
+                status: "pending",
+                count: "1",
+            },
+        ];
+        const KEY = "save-cody-checkins-v1";
+        let checked = {};
+        try {
+            checked = JSON.parse(localStorage.getItem(KEY) || "{}");
+        } catch (e) { }
+        let current = null,
+            stream = null,
+            scanning = false,
+            detector = null;
+        const $ = (id) => document.getElementById(id);
+        function esc(s) {
+            return String(s ?? "").replace(
+                /[&<>"']/g,
+                (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]
+            );
+        }
+        function notice(s, cl = "") {
+            $("notice").textContent = s;
+            $("notice").className = cl;
+        }
+        function stats() {
+            $("stats").textContent =
+                Object.keys(checked).filter((id) => REG.some((r) => r.id === id)).length +
+                " / " +
+                REG.length +
+                " families checked in";
+        }
+        function save() {
+            try {
+                localStorage.setItem(KEY, JSON.stringify(checked));
+                stats();
+            } catch (e) {
+                notice("Unable to save check-in. Export CSV immediately.", "bad");
+            }
+        }
+        function show(r) {
+            stop();
+            current = r;
+            $("match").style.display = "block";
+            $("family").textContent = r.guardian;
+            $("info").innerHTML =
+                "<strong>Registration:</strong> " +
+                esc(r.id) +
+                "<p><strong>Registration status:</strong> " +
+                esc(r.status) +
+                "</p><strong>Registered participants:</strong><ul>" +
+                r.children.map((n) => "<li>" + esc(n) + "</li>").join("") +
+                "</ul>";
+            $("passport").value = checked[r.id]?.passport || "";
+            const was = checked[r.id];
+            $("status").textContent = was
+                ? "ALREADY CHECKED IN — " + new Date(was.at).toLocaleString()
+                : "Registration found — not yet checked in";
+            $("status").className = was ? "warn" : "good";
+            $("confirm").disabled = !!was || r.status.toLowerCase() !== "confirmed";
+            $("undo").style.display = was ? "inline-block" : "none";
+            $("match").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+        function lookup(value) {
+            value = (value || "").trim();
+            let r = REG.find((r) => r.qr === value || r.id.toLowerCase() === value.toLowerCase());
+            if (r) {
+                notice("Registration found.", "good");
+                show(r);
+            } else {
+                current = null;
+                $("match").style.display = "none";
+                notice("QR / registration not found. Search guardian name or check the registration list.", "bad");
+            }
+        }
+        $("lookup").onclick = () => lookup($("qr").value);
+        $("qr").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") lookup(e.target.value);
+        });
+        $("findName").onclick = () => {
+            let s = $("search").value.trim().toLowerCase();
+            if (s.length < 2) {
+                notice("Enter at least two characters.", "warn");
+                return;
+            }
+            let arr = REG.filter((r) => r.guardian.toLowerCase().includes(s) || r.id.toLowerCase().includes(s));
+            $("matches").innerHTML = arr.length
+                ? arr
+                    .slice(0, 12)
+                    .map(
+                        (r) =>
+                            '<button class="secondary" data-id="' +
+                            esc(r.id) +
+                            '">' +
+                            esc(r.guardian) +
+                            " — " +
+                            esc(r.id) +
+                            "</button>"
+                    )
+                    .join("")
+                : "No matching families";
+            $("matches")
+                .querySelectorAll("button")
+                .forEach((b) => (b.onclick = () => show(REG.find((r) => r.id === b.dataset.id))));
+        };
+        $("confirm").onclick = () => {
+            if (!current || checked[current.id]) return;
+            if (!confirm("Issue ONE passport to " + current.guardian + "?")) return;
+            checked[current.id] = { at: new Date().toISOString(), passport: $("passport").value.trim() };
+            save();
+            show(current);
+        };
+        $("undo").onclick = () => {
+            if (!current || !confirm("Remove check-in for " + current.guardian + "?")) return;
+            delete checked[current.id];
+            save();
+            show(current);
+        };
+        function stop() {
+            scanning = false;
+            if (stream) {
+                stream.getTracks().forEach((t) => t.stop());
+                stream = null;
+            }
+            $("camera").style.display = "none";
+            $("stop").style.display = "none";
+        }
+        $("stop").onclick = stop;
+        async function scanLoop() {
+            if (!scanning || !stream || !detector) return;
+            try {
+                let codes = await detector.detect($("video"));
+                if (codes.length) {
+                    let value = codes[0].rawValue;
+                    $("qr").value = value;
+                    lookup(value);
+                    return;
+                }
+            } catch (e) { }
+            if (scanning) requestAnimationFrame(scanLoop);
+        }
+        $("start").onclick = async () => {
+            if (!("BarcodeDetector" in window)) {
+                notice(
+                    "This Chrome version does not support QR detection. Use the photo option or manual lookup.",
+                    "bad"
+                );
+                return;
+            }
+            try {
+                detector = new BarcodeDetector({ formats: ["qr_code"] });
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: { ideal: "environment" } },
+                    audio: false,
+                });
+                $("video").srcObject = stream;
+                await $("video").play();
+                $("camera").style.display = "block";
+                $("stop").style.display = "inline-block";
+                scanning = true;
+                notice("Point the camera at the family QR code.", "good");
+                scanLoop();
+            } catch (e) {
+                stop();
+                notice("Camera unavailable: " + e.message + ". Use photo or manual lookup.", "bad");
+            }
+        };
+        $("photo").onchange = async (e) => {
+            let file = e.target.files[0];
+            if (!file) return;
+            if (!("BarcodeDetector" in window)) {
+                notice("QR image reading is unavailable in this browser. Use manual lookup.", "bad");
+                return;
+            }
+            try {
+                let d = new BarcodeDetector({ formats: ["qr_code"] });
+                let bitmap = await createImageBitmap(file);
+                let codes = await d.detect(bitmap);
+                bitmap.close();
+                if (!codes.length) {
+                    notice("No QR detected in photo. Retake closer and in good light.", "bad");
+                    return;
+                }
+                $("qr").value = codes[0].rawValue;
+                lookup(codes[0].rawValue);
+            } catch (err) {
+                notice("Unable to read photo: " + err.message, "bad");
+            }
+        };
+        $("export").onclick = () => {
+            const lines = [
+                ["Registration Number", "Guardian", "Check-In Time", "Passport Number"],
+                ...REG.filter((r) => checked[r.id]).map((r) => [
+                    r.id,
+                    r.guardian,
+                    checked[r.id].at,
+                    checked[r.id].passport,
+                ]),
+            ];
+            const csv = lines
+                .map((row) => row.map((v) => '"' + String(v || "").replace(/"/g, '""') + '"').join(","))
+                .join("\r\n");
+            let url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+            let a = document.createElement("a");
+            a.href = url;
+            a.download = "save-cody-checkins-" + new Date().toISOString().slice(0, 10) + ".csv";
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(url), 3000);
+        };
+        stats();
+    </script>
+</body>
+
+</html>
